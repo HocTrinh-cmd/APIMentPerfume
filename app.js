@@ -53,10 +53,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors()); //mở cổng để các hệ thống khác truy cập
 
 //----------------------------------------
+
 //Kết nối với mongoose: mongodb+srv://tth06102004:0902851922@cluster0.s89ky.mongodb.net/dataManT?retryWrites=true&w=majority&appName=Cluster0
-mongoose.connect('mongodb://localhost:27017/APIDUAN')
-  .then(() => { console.log('Connect succes') })
-  .catch(() => { console.log('Fail') })
+
+mongoose.connect('mongodb+srv://tth06102004:0902851922@cluster0.s89ky.mongodb.net/dataManT?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(error => console.error('MongoDB connection error:', error));
 
 //localhost:8080/users
 app.use('/users', usersRouter);
