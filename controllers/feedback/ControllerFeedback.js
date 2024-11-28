@@ -1,6 +1,7 @@
 const Feedback = require('../feedback/ModelFeedback');
 const Product = require('../product/ModelProduct');
 const User = require('../user/userModel')
+const mongoose = require('mongoose');
 
 // Đánh giá sản phẩm
 const addFeedback = async (user, quality, content, rating, productId) => {
@@ -20,17 +21,6 @@ const addFeedback = async (user, quality, content, rating, productId) => {
             throw new Error('Tất cả các trường là bắt buộc.');
         }
 
-        // kiểm tra người dùng đã đánh giá sản phẩm này hay chưa
-        const existingFeedback = await Feedback.findOne({
-            'user.id': userId,  
-            productId: productId 
-        });
-        
-        if (existingFeedback) {
-            throw new Error('Người dùng đã đánh giá cho sản phẩm.');
-        }
-
-        
 
         // Tạo một đánh giá mới
         const newFeedback = new Feedback({
@@ -55,13 +45,13 @@ const addFeedback = async (user, quality, content, rating, productId) => {
             status: true,
             message: "Đánh giá đã được thêm thành công.",
             feedback: savedFeedback, // Trả về phản hồi đã lưu
-
         };
     } catch (error) {
         console.error(error);
         throw new Error('Lỗi khi thêm đánh giá.');
     }
 };
+
 
 // Hiển thị tất cả đánh giá của một sản phẩm
 const getFeedbacksByProductId = async (productId) => {
